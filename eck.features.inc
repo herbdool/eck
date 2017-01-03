@@ -223,6 +223,9 @@ function eck_bundle_features_revert($module) {
  */
 function eck_bundle_features_rebuild($module) {
   if ($default_types = features_get_default('eck_bundle', $module)) {
+    // Reset the bundles cache.
+    Bundle::loadAll(TRUE);
+
     foreach ($default_types as $bundle_machine_name => $bundle_info) {
 
       $bundle = Bundle::loadByMachineName($bundle_machine_name);
