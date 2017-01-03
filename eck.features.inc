@@ -30,7 +30,7 @@ function eck_entity_type_features_export($data, &$export, $module_name = '') {
   foreach ($data as $entity_type) {
     // Export the entity type.
     $export['features']['eck_entity_type'][$entity_type] = $entity_type;
-    $export['dependencies']['eck_entity_type'] = 'eck';
+    $export['dependencies']['eck'] = 'eck';
     // @todo We need to add dependencies on the modules implementing the
     // property behaviors currently they are all implemented by ECK but in the
     // future, people might have their custom behaviors.. or we might have
