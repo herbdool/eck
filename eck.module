@@ -863,6 +863,11 @@ function eck__entity_access($op, $entity_or_bundle, $account, $entity_type_name)
  * Implements hook_entity_view_alter().
  */
 function eck_entity_view_alter(&$build, $entity_type) {
+  // Return early if we don't have to add contextual links.
+  if (!module_exists('contextual') || !user_access('access contextual links')) {
+    return;
+  }
+
   $entity_types = EntityType::loadAll();
 
   foreach ($entity_types as $et) {
