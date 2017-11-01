@@ -224,7 +224,7 @@ class EntityType extends DBObject {
    * @return EntityType[]
    */
   public static function loadMultipleByName(array $names) {
-    $entityTypes = [];
+    $entityTypes = array();
 
     foreach ($names as $name) {
       $entityType = self::loadByName($name);
@@ -518,7 +518,7 @@ class Bundle extends DBObject {
    * @return Bundle[]
    */
   public static function loadMultipleByMachineName(array $machineNames) {
-    $bundles = [];
+    $bundles = array();
 
     foreach ($machineNames as $machineName) {
       $bundle = self::loadByMachineName($machineName);
