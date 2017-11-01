@@ -425,8 +425,6 @@ function eck__entity__form_validate($form, &$state) {
 function eck__entity__form_submit($form, &$state) {
   $entity = $state['values']['entity'];
 
-  field_attach_submit($entity->entityType(), $entity, $form, $state);
-
   $entity_type = $entity->entityType();
   $entity_type = EntityType::loadByName($entity_type);
   $properties = $entity_type->properties;
@@ -468,6 +466,8 @@ function eck__entity__form_submit($form, &$state) {
 
     $wrapper->{$property}->set($value);
   }
+
+  field_attach_submit($entity->entityType(), $entity, $form, $state);
 
   // Let the behaviors modify the entity.
   // @todo Why do we need to pass form information to the save behavior.
