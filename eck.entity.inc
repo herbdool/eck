@@ -403,7 +403,7 @@ function eck__entity__form($form, &$form_state, $entity) {
   if (module_exists('entity_translation') &&
     entity_translation_enabled($entity->entityType())) {
     $handler = entity_translation_get_handler($entity->entityType(), $entity);
-    $langcode = $handler->getFormLanguage();
+    $langcode = $handler->getActiveLanguage();
   }
 
   field_attach_form($entity->entityType(), $entity, $form, $form_state, $langcode);
