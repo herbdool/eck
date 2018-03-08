@@ -3,7 +3,6 @@
  * @file
  * Field handler to present a link to editt the entity content.
  */
-
 // @codingStandardsIgnoreStart
 class eck_views_handler_field_link_edit extends eck_views_handler_field_link {
 
@@ -17,7 +16,8 @@ class eck_views_handler_field_link_edit extends eck_views_handler_field_link {
         "eck administer entities",
         "eck {$action} entities",
         "eck administer {$entity_type} {$bundle} entities",
-        "eck {$action} {$entity_type} {$bundle} entities"))) {
+        "eck {$action} {$entity_type} {$bundle} entities"
+      ))) {
 
       $crud_info = get_bundle_crud_info($entity_type, $bundle);
       $this->options['alter']['make_link'] = TRUE;
