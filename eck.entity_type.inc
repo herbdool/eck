@@ -26,7 +26,12 @@ function eck__entity_type__menu() {
     'description' => 'A centralized administrative section for entity types',
     'page callback' => 'eck__entity_type__list',
     'access callback' => 'eck__multiple_access_check',
-    'access arguments' => array(array('eck administer entity types', 'eck list entity types')),
+    'access arguments' => array(
+      array(
+        'eck administer entity types',
+        'eck list entity types'
+      )
+    ),
     'file' => 'eck.entity_type.inc',
   );
 
@@ -37,7 +42,12 @@ function eck__entity_type__menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('eck__entity_type__form'),
     'access callback' => 'eck__multiple_access_check',
-    'access arguments' => array(array('eck administer entity types', 'eck add entity types')),
+    'access arguments' => array(
+      array(
+        'eck administer entity types',
+        'eck add entity types'
+      )
+    ),
     'type' => MENU_LOCAL_ACTION,
     'weight' => -1,
     'file' => 'eck.entity_type.inc',
@@ -58,7 +68,10 @@ function eck__entity_type__menu() {
  */
 function eck__entity_type__list() {
   $path = eck__entity_type__path();
-  $header = array(t('Entity type'), array('data' => t('Operations'), 'colspan' => '1'));
+  $header = array(
+    t('Entity type'),
+    array('data' => t('Operations'), 'colspan' => '1')
+  );
   $rows = array();
 
   $entity_types = EntityType::loadAll();
@@ -67,7 +80,10 @@ function eck__entity_type__list() {
   foreach ($entity_types as $entity_type) {
     $allowed_operations = '';
     // Check that the user has permissions to delete:
-    if (eck__multiple_access_check(array('eck administer entity types', 'eck delete entity types'))) {
+    if (eck__multiple_access_check(array(
+      'eck administer entity types',
+      'eck delete entity types'
+    ))) {
       $allowed_operations = l(t("delete"), "{$path}/{$entity_type->name}/delete");
     }
 

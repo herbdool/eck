@@ -168,9 +168,9 @@ function eck__entity__list($entity_type_name, $bundle_name) {
   // Get all entity instances of this type.
   $query = new EntityFieldQuery();
   $query
-  ->entityCondition('entity_type', $entity_type->name, '=')
-  ->entityCondition('bundle', $bundle->name, '=')
-  ->pager(20);
+    ->entityCondition('entity_type', $entity_type->name, '=')
+    ->entityCondition('bundle', $bundle->name, '=')
+    ->pager(20);
 
   drupal_alter('entity_overview_query', $query, $info);
   unset($info['entity_type']);
@@ -401,7 +401,8 @@ function eck__entity__form($form, &$form_state, $entity) {
   // Entity Translation module integration.
   $langcode = LANGUAGE_NONE;
   if (module_exists('entity_translation') &&
-    entity_translation_enabled($entity->entityType())) {
+    entity_translation_enabled($entity->entityType())
+  ) {
     $handler = entity_translation_get_handler($entity->entityType(), $entity);
     $langcode = $handler->getActiveLanguage();
   }
@@ -485,7 +486,11 @@ function eck__entity__form_submit($form, &$state) {
     '@entity_label' => entity_label($form['#entity_type'], $entity),
   );
 
-  $context = array('entity' => $entity, 'form' => $form, 'form_state' => $state);
+  $context = array(
+    'entity' => $entity,
+    'form' => $form,
+    'form_state' => $state
+  );
   drupal_alter('eck_entity_save_message', $msg, $args, $context);
 
   if ($msg) {

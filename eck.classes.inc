@@ -1,9 +1,9 @@
 <?php
+
 /**
  * @file
  * Classes for all the different objects used in ECK.
  */
-
 class DBObject implements Iterator {
   // Wheteher this object was loaded or just created.
   public $isNew;
@@ -107,7 +107,8 @@ class DBObject implements Iterator {
       // Well I need to know what the primary id is to set up the condition.
       $primary_key = $this->primaryKeys[0];
       db_update($this->table)
-        ->condition($primary_key, $this->{$primary_key}, '=')->fields($this->data)
+        ->condition($primary_key, $this->{$primary_key}, '=')
+        ->fields($this->data)
         ->execute();
     }
 
@@ -129,8 +130,11 @@ class DBObject implements Iterator {
    *   the value the property should match.
    */
   protected function load($property, $value) {
-    $result = db_select($this->table, 't')->fields('t')->condition($property, $value, '=')
-      ->execute()->fetchAssoc();
+    $result = db_select($this->table, 't')
+      ->fields('t')
+      ->condition($property, $value, '=')
+      ->execute()
+      ->fetchAssoc();
 
     if ($result) {
       foreach ($result as $property => $value) {
@@ -267,7 +271,11 @@ class EntityType extends DBObject {
     // code.
     if (!array_key_exists($name, $p2)) {
       eck_property_behavior_invoke_plugin($this, 'property_add',
-        array('name' => $name, 'property' => $p[$name], 'entity_type' => $this));
+        array(
+          'name' => $name,
+          'property' => $p[$name],
+          'entity_type' => $this
+        ));
     }
 
   }
@@ -284,7 +292,11 @@ class EntityType extends DBObject {
 
       // Let the behaviors execute some code.
       eck_property_behavior_invoke_plugin($this, 'property_remove',
-      array('name' => $name, 'property' => $p[$name], 'entity_type' => $this));
+        array(
+          'name' => $name,
+          'property' => $p[$name],
+          'entity_type' => $this
+        ));
 
       unset($p[$name]);
       $this->properties = $p;
@@ -415,6 +427,7 @@ class EntityType extends DBObject {
 
     eck_clean_up_request();
   }
+
   /**
    * Delete.
    */
@@ -770,7 +783,8 @@ class Bundle extends DBObject {
     if (empty($field['field_name']) || (isset($field_type_fields[$field['field_name']]) && !$options['use existing'])) {
       $iter = count($field_type_fields) + 1;
       $field += array(
-        'field_name' => substr('field_' . $field_type, 0, 28) . '_' . $iter);
+        'field_name' => substr('field_' . $field_type, 0, 28) . '_' . $iter
+      );
     }
 
     // Create a new field if the field name is unique over active and
