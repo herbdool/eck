@@ -445,9 +445,9 @@ function eck__entity_type__info($entity_type) {
 
     // Provide a path scheme for the Entity Translation UI.
     $info[$entity_type->name]['translation']['entity_translation']['path schemes'][$bundle->name] = array(
-      'base path' => "{$entity_type->name}/{$bundle->name}/%",
-      'translate path' => "{$entity_type->name}/{$bundle->name}/%/translate",
-      'path wildcard' => '%',
+      'base path' => "{$entity_type->name}/{$bundle->name}/%eckentity",
+      'translate path' => "{$entity_type->name}/{$bundle->name}/%eckentity/translate",
+      'path wildcard' => '%eckentity',
     );
 
     $info[$entity_type->name]['bundles'][$bundle->name] = array(
