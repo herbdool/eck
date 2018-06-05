@@ -138,6 +138,11 @@ function eck__entity__menu($entity_type, $bundle) {
 
 /**
  * Get admin bundle information from the entity info array.
+ *
+ * @param string $entity_type_name
+ *   Entity type.
+ * @param string $bundle_name
+ *   Bundle.
  */
 function get_bundle_admin_info($entity_type, $bundle) {
   $info = entity_get_info();
@@ -147,6 +152,11 @@ function get_bundle_admin_info($entity_type, $bundle) {
 
 /**
  * Get bundle crud information from the entity info array.
+ *
+ * @param string $entity_type_name
+ *   Entity type.
+ * @param string $bundle_name
+ *   Bundle.
  */
 function get_bundle_crud_info($entity_type_name, $bundle_name) {
   $info = entity_get_info();
@@ -155,6 +165,11 @@ function get_bundle_crud_info($entity_type_name, $bundle_name) {
 
 /**
  * Entity overview page callback.
+ *
+ * @param string $entity_type_name
+ *   Entity type.
+ * @param string $bundle_name
+ *   Bundle.
  */
 function eck__entity__list($entity_type_name, $bundle_name) {
   $entity_type = entity_type_load($entity_type_name);
@@ -246,11 +261,15 @@ function eck__entity__add($entity_type_name, $bundle_name) {
  *
  * @param string $entity_type
  *   entity type
+ * @param string $bundle
+ *   Bundle.
  * @param mixed $id
  *   The entity id or the entity object itself
  *   Normally you wouldn't need to call this function if you already have the
  *   loaded entity but there are some workflows where an object is passed.
  *   So this function handles that case as well.
+ * @param string $view_mode
+ *   View mode
  */
 function eck__entity__build($entity_type, $bundle, $id, $view_mode = "full") {
 
@@ -289,6 +308,13 @@ function eck__entity__edit($entity_type_name, $bundle_name, $id) {
 
 /**
  * Callback function for the delete functionality.
+ *
+ * @param string $entity_type_name
+ *   Entity type.
+ * @param string $bundle_name
+ *   Bundle.
+ * @param object $entity
+ *   an object as returned by entity_load().
  */
 function eck__entity__delete($entity_type_name, $bundle_name, $entity) {
   $entity_type = entity_type_load($entity_type_name);
