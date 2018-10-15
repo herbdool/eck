@@ -425,7 +425,7 @@ function eck__entity__form($form, &$form_state, $entity) {
   );
 
   // Entity Translation module integration.
-  $langcode = LANGUAGE_NONE;
+  $langcode = NULL;
   if (module_exists('entity_translation') &&
     entity_translation_enabled($entity->entityType())
   ) {
