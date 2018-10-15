@@ -30,8 +30,6 @@ class DBObject implements Iterator {
     // Iterator variable.
     $this->position = 0;
 
-    $data = array();
-
     // Is this a real table? If it is, check it.
     if ($schema = drupal_get_schema($table)) {
       $this->table = $table;
@@ -127,7 +125,7 @@ class DBObject implements Iterator {
    * @param string $property
    *   The property we will use to search for the record.
    * @param mixed $value
-   *   the value the property should match.
+   *   The value the property should match.
    */
   protected function load($property, $value) {
     $result = db_select($this->table, 't')
@@ -204,8 +202,12 @@ class DBObject implements Iterator {
       return FALSE;
     }
   }
+
 }
 
+/**
+ * An entity type database object.
+ */
 class EntityType extends DBObject {
 
   // If an entity type is new, we can create its table from the current data of
@@ -277,7 +279,6 @@ class EntityType extends DBObject {
           'entity_type' => $this
         ));
     }
-
   }
 
   /**
@@ -311,9 +312,8 @@ class EntityType extends DBObject {
    *
    * @param string $name
    *   The name of the property.
-   *
    * @param string $behavior
-   *   the name of the behavior.
+   *   The name of the behavior.
    */
   public function changeBehavior($name, $behavior) {
     $p = $this->properties;
@@ -514,8 +514,12 @@ class EntityType extends DBObject {
     }
     return $entity_types;
   }
+
 }
 
+/**
+ * A bundle database object.
+ */
 class Bundle extends DBObject {
 
   /**
@@ -647,8 +651,8 @@ class Bundle extends DBObject {
    * This method returns a bundle object.
    *
    * @param string $machine_name
-   *   A string composed of the entity type name and the bundle name.
-   *   "{$entity_type_name}_{$bundle_name}"
+   *   A string composed of the entity type name and the bundle name,
+   *   e.g., "{$entity_type_name}_{$bundle_name}".
    *
    * @return Bundle|Null
    */
@@ -712,7 +716,7 @@ class Bundle extends DBObject {
    * Load the bundles of an entity type.
    *
    * @param EntityType $entity_type
-   *   entity type object.
+   *   An entity type object.
    *
    * @return array
    *   An array with the bundles associated with the given entity type.
@@ -739,10 +743,11 @@ class Bundle extends DBObject {
   /**
    * Adds a field to this bundle.
    *
+   * See: @link field Field API data structures @endlink.
+   *
    * @param string $field_type
    *   The type of field to add. One of the keys as defined by any field module
    *   using hook_field_info.
-   *
    * @param array $options
    *   This is an optional array. Its properties can include:
    *   _use existing_: If TRUE and if a 'field_name' property is specified in
@@ -759,7 +764,7 @@ class Bundle extends DBObject {
    *   The $instance array with the id property filled in as returned by
    *   field_create_instance().
    *
-   * See: @link field Field API data structures @endlink.
+   * @throws \FieldException
    */
   public function addField($field_type, $options = array()) {
     // Check that the field type is known.
@@ -805,6 +810,7 @@ class Bundle extends DBObject {
     }
     return field_create_instance($instance);
   }
+
 }
 
 /**
@@ -859,4 +865,5 @@ class ECKCache {
     $this->data = NULL;
     cache_clear_all($this->id, 'cache_eck');
   }
+
 }

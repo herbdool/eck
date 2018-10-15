@@ -4,7 +4,6 @@
  * ECK's API documentation.
  */
 
-
 /**
  * Respond to the creation of a new ECK entity type.
  *
@@ -64,7 +63,7 @@ function hook_eck_default_properties() {
  *
  * More constrained versions of this hook also exist:
  * hook_eck_entity_<entity_type>_label
- * hook_eck_entity_<entity_type>_<bundle>_label
+ * hook_eck_entity_<entity_type>_<bundle>_label.
  *
  * This hook is mainly useful for dynamic labels, or for using values
  * in a field as labels.
@@ -105,7 +104,7 @@ function hook_eck_property_types() {
  * @param string $type
  *   The property type.
  */
-function hook_eck_property_type_schema_alter(&$schema, $type) {
+function hook_eck_property_type_schema_alter(array &$schema, $type) {
   if ($type == 'email') {
     $schema = array(
       'description' => 'An email',

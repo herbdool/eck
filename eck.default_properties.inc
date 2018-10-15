@@ -30,7 +30,6 @@ function eck__default_properties__form($form, &$state, $entity_type) {
 
   $form['default_properties']['#default_value'] = $defaults;
   // :S
-
   return $form;
 }
 

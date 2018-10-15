@@ -20,4 +20,5 @@ class EntityTranslationECKHandler extends EntityTranslationDefaultHandler {
     // Since we are using per-bundle paths then use the bundle's path scheme.
     $this->setPathScheme($entity->type);
   }
+
 }

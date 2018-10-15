@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * ENTITY TYPE
+ * ENTITY TYPE.
  *
  * Entity Types represent types of data. Drupal core contains multiple
  * entity types nodes, users, vocabularies, etc.
@@ -319,7 +319,7 @@ function eck__entity_type__delete_form_submit($form, &$state) {
  * @param EntityType $entity_type
  *   Entity type as returned by eck__entity_type__load().
  *
- * Passthrough for hook_schema().
+ *   Passthrough for hook_schema().
  */
 function eck__entity_type__schema($entity_type) {
   $schema = array(
@@ -355,7 +355,7 @@ function eck__entity_type__schema($entity_type) {
  * Generate the entity info for a specific entity.
  *
  * @param EntityType $entity_type
- *   as returned by eck__entity_type__load
+ *   As returned by eck__entity_type__load().
  */
 function eck__entity_type__info($entity_type) {
   module_load_include('inc', 'eck', 'eck.bundle');

@@ -38,7 +38,6 @@ function eck_property_behavior_implements($entity_type, $property, $function_nam
  * A general function to call specific functions in a property behavior plugin.
  */
 function eck_property_behavior_invoke_plugin($entity_type, $function_name, $all = array(), $specific = array()) {
-
   $properties = $entity_type->properties;
   $returns = array();
 
@@ -76,15 +75,14 @@ function eck_property_behavior_invoke_plugin($entity_type, $function_name, $all 
  * @param EntityType $entity_type
  *   The entity type object.
  * @param string $function_name
- *   the name of the sub_hook.
+ *   The name of the sub_hook.
  * @param array $var
  *   Variable to be altered.
  *
  * @return array
  *   most likely, an array returned by a plugin.
  */
-function eck_property_behavior_invoke_plugin_alter($entity_type, $function_name, $var) {
-
+function eck_property_behavior_invoke_plugin_alter($entity_type, $function_name, array $var) {
   $properties = $entity_type->properties;
   $return = $var;
 

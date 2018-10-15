@@ -12,6 +12,9 @@ module_load_include('inc', 'eck', 'eck.classes');
  * @param /EntityType $entity_type
  *   As returned by eck__entity_type__load().
  *
+ * @return array
+ *   A menu item array.
+ *
  * @see eck_menu()
  */
 function eck__bundle__menu($entity_type) {
@@ -133,7 +136,7 @@ function eck__bundle__menu($entity_type) {
 /**
  * Page call back for the bundle overview table.
  *
- * to see and manipulate all created label of a given type.
+ * To see and manipulate all created label of a given type.
  *
  * @param string $entity_type
  *   The name of the entity type.
@@ -259,7 +262,6 @@ function eck__bundle__add_validate($form, &$form_state) {
   // The type does not have to be unique in the table, but it should be unique
   // to its entity so we will check that here.
   foreach (Bundle::loadByEntityType($entity_type) as $bundle) {
-
     if ($bundle->name == $form_state['values']['bundle_name']) {
       form_set_error('bundle', t("bundle @bundle_name already exists for this entity type",
         array("@bundle_name" => $bundle->name)));
@@ -362,6 +364,7 @@ function eck__bundle__edit_form($form, &$form_state, $entity_type_name, $bundle_
     '#value' => t('Save bundle'),
     '#weight' => 40,
   );
+
   return $form;
 }
 
@@ -489,9 +492,7 @@ function eck__bundle__field_autocomplete($entity_type, $bundle, $string = "") {
  * Helper function to determine if an entity wants to define a field as lable.
  */
 function get_bundle_field_label_info($entity_type, $bundle) {
-
   $info = entity_get_info();
-
   if (array_key_exists('field label', $info[$entity_type->name]['bundles'][$bundle->name])) {
     return $info[$entity_type->name]['bundles'][$bundle->name]['field label'];
   }

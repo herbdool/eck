@@ -33,4 +33,5 @@ class EckInlineEntityFormController extends EntityInlineEntityFormController {
     unset($entity_form['submit']);
     return $entity_form;
   }
+
 }

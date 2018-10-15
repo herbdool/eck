@@ -131,7 +131,6 @@ function eck_schema() {
   // stages and by many other processes withing drupal. Because we are creating
   // tables dynamically with eck, we need to expose those schemas through this
   // function, that is why we are doing this.
-
   return $schema;
 }
 
@@ -143,7 +142,6 @@ function eck_update_7000() {
   // hold all of the types information. So for this update we need to create the
   // table, and add all of the current entities with their types to the table,
   // so we can unify the implementations of bundles in code.
-
   $schema = array(
     'description' => "The base table for entities types information",
     'fields' => array(
@@ -216,7 +214,6 @@ function eck_update_7000() {
 function eck_update_7001() {
   // For importing and exporting things it is always good to have a uuid, so we
   // will add that colunm to the current entity types.
-
   // Now we add a type (bundle) to the table for each entity in the eck table.
   $results = db_select('eck', 't')->fields('t')->execute();
 
@@ -246,7 +243,6 @@ function eck_update_7002() {
   // campture those different states: 0- don't show 1 - show 3 - needs review 4
   // - revised by editor, etc. Also instead of status, I think that "state" is a
   // more appropiate name.
-
   $results = db_select('eck', 't')->fields('t')->execute();
 
   foreach ($results as $record) {

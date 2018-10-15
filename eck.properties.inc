@@ -11,7 +11,7 @@
  * @param array $schema
  *   A schema array.
  */
-function eck_set_properties_schema(&$schema, $entity_type) {
+function eck_set_properties_schema(array &$schema, $entity_type) {
   $properties = $entity_type->properties;
 
   foreach ($properties as $name => $info) {
@@ -165,7 +165,6 @@ function eck__properties__form($form, &$state, $entity_type_name) {
     // @todo need to get a better interface.
     // But until then, we need to keep the form from changing the
     // property_type or property_name of the already existing properties.
-
     if (!array_key_exists($property_name, $new_properties) ||
       $new_properties[$property_name]['type'] == $property_type
     ) {
@@ -203,7 +202,6 @@ function eck__properties__form($form, &$state, $entity_type_name) {
   // load all defaults, and then load all the properties in the entity type,
   // while modifying the before added default properties given the entity
   // type settings.
-
   $property_arrays = array('new_properties');
 
   foreach ($property_arrays as $array_name) {
