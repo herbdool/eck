@@ -59,7 +59,6 @@ function eck_schema() {
       'label' => array(
         'description' => "The entity's Label",
         'type' => 'varchar',
-        'type' => 'varchar',
         'length' => 128,
         'not null' => TRUE,
       ),
@@ -154,20 +153,17 @@ function eck_update_7000() {
       'entity' => array(
         'description' => "The entity this type belongs to",
         'type' => 'varchar',
-        'type' => 'varchar',
         'length' => 128,
         'not null' => TRUE,
       ),
       'type' => array(
         'description' => "The type (bundle) name that will be used",
         'type' => 'varchar',
-        'type' => 'varchar',
         'length' => 128,
         'not null' => TRUE,
       ),
       'label' => array(
         'description' => "A human readable name for the bundle (not that the type is not human readable)",
-        'type' => 'varchar',
         'type' => 'varchar',
         'length' => 128,
         'not null' => TRUE,
@@ -312,7 +308,6 @@ function eck_update_7005() {
     array(
       'description' => "The entity type this bundle belongs to",
       'type' => 'varchar',
-      'type' => 'varchar',
       'length' => 128,
       'not null' => TRUE,
     )
@@ -322,7 +317,6 @@ function eck_update_7005() {
   db_change_field('eck_bundle', 'type', 'name',
     array(
       'description' => "The bundle's name",
-      'type' => 'varchar',
       'type' => 'varchar',
       'length' => 128,
       'not null' => TRUE,
