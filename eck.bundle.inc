@@ -44,7 +44,7 @@ function eck__bundle__menu($entity_type) {
     'title' => "Delete",
     'description' => "Delete the '{$entity_type->label}' Entity Type",
     // "eck__entity_type__delete",
-    'page callback' => "drupal_get_form",
+    'page callback' => "backdrop_get_form",
     'page arguments' => array(
       "eck__entity_type__delete_form",
       $entity_type->name
@@ -66,7 +66,7 @@ function eck__bundle__menu($entity_type) {
     'title' => "Manage properties",
     'description' => "Manage the properties of the {$entity_type->label} entity type",
     // "eck__entity_type__delete",
-    'page callback' => "drupal_get_form",
+    'page callback' => "backdrop_get_form",
     'page arguments' => array("eck__properties__form", $entity_type->name),
     'access callback' => 'eck__multiple_access_check',
     'access arguments' => array(
@@ -108,7 +108,7 @@ function eck__bundle__menu($entity_type) {
   $menu["{$path}/{$entity_type->name}/edit"] = array(
     'title' => "Edit",
     'description' => "Edit the '{$entity_type->label}' entity type",
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array("eck__entity_type__form", $entity_type->name),
     'access callback' => 'eck__multiple_access_check',
     'access arguments' => array(
@@ -126,7 +126,7 @@ function eck__bundle__menu($entity_type) {
   $menu["{$path}/{$entity_type->name}/add"] = array(
     'title' => "Add bundle ",
     'description' => "Add a(n) new '{$entity_type->label} Bundle'",
-    'page callback' => "drupal_get_form",
+    'page callback' => "backdrop_get_form",
     'page arguments' => array('eck__bundle__add', 3),
     'access callback' => 'eck__multiple_access_check',
     'access arguments' => array(
@@ -309,10 +309,10 @@ function eck__bundle__add_submit($form, &$form_state) {
   );
 
   $context = array('bundle' => $bundle, 'form_state' => $form_state);
-  drupal_alter('eck_bundle_save_message', $msg, $args, $context);
+  backdrop_alter('eck_bundle_save_message', $msg, $args, $context);
 
   if ($msg) {
-    drupal_set_message(t($msg, $args));
+    backdrop_set_message(t($msg, $args));
   }
 
   $form_state['redirect'] = "{$path}/{$entity_type->name}";
@@ -406,7 +406,7 @@ function eck__bundle__edit_form_submit($form, &$form_state) {
   // Save the bundle object to the database.
   $bundle->save();
 
-  drupal_set_message(t('the bundle %bundle for entity type %entity_type has been updated.',
+  backdrop_set_message(t('the bundle %bundle for entity type %entity_type has been updated.',
     array('%bundle' => $bundle->label, '%entity_type' => $entity_type->label)));
 }
 
@@ -423,7 +423,7 @@ function eck__bundle__edit_form_submit($form, &$form_state) {
 function eck__bundle__delete($entity_type, $bundle) {
   // And finally we delete the bundle from the eck_type table.
   $bundle->delete();
-  drupal_set_message(t('The bundle %bundle from the entity type %entity_type has been deleted.',
+  backdrop_set_message(t('The bundle %bundle from the entity type %entity_type has been deleted.',
     array('%bundle' => $bundle->label, '%entity_type' => $entity_type->label)));
 }
 
@@ -502,7 +502,7 @@ function eck__bundle__field_autocomplete($entity_type, $bundle, $string = "") {
     }
   }
 
-  drupal_json_output($matches);
+  backdrop_json_output($matches);
 }
 
 /**

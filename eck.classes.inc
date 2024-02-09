@@ -4,6 +4,10 @@
  * @file
  * Classes for all the different objects used in ECK.
  */
+
+/**
+ * DBObject
+ */
 class DBObject implements Iterator {
   // Wheteher this object was loaded or just created.
   public $isNew;
@@ -31,7 +35,7 @@ class DBObject implements Iterator {
     $this->position = 0;
 
     // Is this a real table? If it is, check it.
-    if ($schema = drupal_get_schema($table)) {
+    if ($schema = backdrop_get_schema($table)) {
       $this->table = $table;
       $this->primaryKeys = $schema["primary key"];
       $this->vars = array_keys($schema['fields']);
@@ -95,7 +99,7 @@ class DBObject implements Iterator {
 
     // Before we save, lets serialize the properties that require it.
     foreach ($this->serialize as $property) {
-      $this->{$property} = drupal_json_encode($this->{$property});
+      $this->{$property} = backdrop_json_encode($this->{$property});
     }
 
     if ($this->isNew) {
@@ -113,7 +117,7 @@ class DBObject implements Iterator {
     // Now that we are done saving lets deserialize in case that for some
     // reason we will continue manipulating the properties.
     foreach ($this->serialize as $property) {
-      $this->{$property} = drupal_json_decode($this->{$property});
+      $this->{$property} = backdrop_json_decode($this->{$property});
     }
 
     $this->isNew = FALSE;
@@ -137,7 +141,7 @@ class DBObject implements Iterator {
     if ($result) {
       foreach ($result as $property => $value) {
         if (in_array($property, $this->serialize)) {
-          $value = drupal_json_decode($value);
+          $value = backdrop_json_decode($value);
         }
         $this->{$property} = $value;
       }
@@ -166,35 +170,35 @@ class DBObject implements Iterator {
   /**
    * From Iterator Interface.
    */
-  public function rewind() {
+  public function rewind():void {
     $this->position = 0;
   }
 
   /**
    * From Iterator Interface.
    */
-  public function current() {
-    return $this->data[$this->key()];
+  public function current():mixed {
+    return isset($this->data[$this->key()]) ? $this->data[$this->key()] : NULL;
   }
 
   /**
    * From Iterator Interface.
    */
-  public function key() {
-    return $this->vars[$this->position];
+  public function key():mixed {
+    return isset($this->vars[$this->position]) ? $this->vars[$this->position] : NULL;
   }
 
   /**
    * From Iterator Interface.
    */
-  public function next() {
+  public function next():void {
     ++$this->position;
   }
 
   /**
    * From Iterator Interface.
    */
-  public function valid() {
+  public function valid():bool {
     if (in_array($this->position, array_keys($this->vars))) {
       return TRUE;
     }
@@ -722,7 +726,7 @@ class Bundle extends DBObject {
    *   An array with the bundles associated with the given entity type.
    */
   public static function loadByEntityType($entity_type) {
-    $entity_bundles = &drupal_static(__FUNCTION__, array());
+    $entity_bundles = &backdrop_static(__FUNCTION__, array());
 
     $entity_type_name = $entity_type->name;
 

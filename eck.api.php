@@ -52,7 +52,7 @@ function hook_eck_default_properties() {
     // @see eck_property_types().
     'type' => "text",
     // To find all of the behaviors that are available, you can use
-    // ctools_get_plugins('eck', 'property_behavior');
+    // plugin_manager_get_plugins('eck', 'property_behavior');
     // or look at the interface under "manage properties"
     'behavior' => 'some_behavior',
   );
@@ -120,7 +120,7 @@ function hook_eck_property_type_schema_alter(array &$schema, $type) {
  * Set custom title for entity save message.
  *
  * @param string $msg
- *   the string to be passed on to drupal_set_message() for entity save.
+ *   the string to be passed on to backdrop_set_message() for entity save.
  * @param array $args
  *   array of arguments.
  * @param array $context
@@ -134,7 +134,7 @@ function hook_eck_entity_save_message_alter(&$msg, $args, $context) {
  * Set custom title for bundle save message.
  *
  * @param string $msg
- *   the string to be passed on to drupal_set_message() for entity save.
+ *   the string to be passed on to backdrop_set_message() for entity save.
  * @param array $args
  *   array of arguments.
  * @param array $context

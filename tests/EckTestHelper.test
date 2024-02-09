@@ -8,7 +8,7 @@
 /**
  * Helper logic for the other ECK tests.
  */
-abstract class EckTestHelper extends DrupalWebTestCase {
+abstract class EckTestHelper extends BackdropWebTestCase {
 
   /**
    * Log in as user 1.
@@ -20,9 +20,9 @@ abstract class EckTestHelper extends DrupalWebTestCase {
     $account->pass_raw = $password;
 
     // Update the stored password.
-    require_once DRUPAL_ROOT . '/' . variable_get('password_inc', 'includes/password.inc');
+    require_once BACKDROP_ROOT . '/' . variable_get('password_inc', 'includes/password.inc');
     $account->pass = user_hash_password(trim($account->pass_raw));
-    drupal_write_record('users', $account, 'uid');
+    backdrop_write_record('users', $account, 'uid');
     entity_get_controller('user')->resetCache(array($account->uid));
 
     $this->drupalLogin($account);
@@ -263,7 +263,7 @@ abstract class EckTestHelper extends DrupalWebTestCase {
     $this->assertEqual($this->getUrl(), url('admin/config/regional/language', array('absolute' => TRUE)), 'Redirected back to the main languages admin page.');
 
     // Clear the language list cache so it can be reloaded.
-    drupal_static_reset('language_list');
+    backdrop_static_reset('language_list');
 
     // Get all language definitions.
     $languages = language_list();

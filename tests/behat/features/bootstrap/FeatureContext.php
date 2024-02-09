@@ -14,7 +14,7 @@ use Behat\Gherkin\Node\PyStringNode,
 /**
  * Features context.
  */
-class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext {
+class FeatureContext extends Backdrop\BackdropExtension\Context\BackdropContext {
   /**
    * Initializes context.
    *

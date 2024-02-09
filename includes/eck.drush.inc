@@ -165,7 +165,7 @@ function _eck_fix_underscores(&$rows) {
   foreach ($rows as $row) {
     $c = 0;
     foreach ($row as $col) {
-      $widths[$c] = max($widths[$c], drupal_strlen($col));
+      $widths[$c] = max($widths[$c], backdrop_strlen($col));
       $c++;
     }
   }

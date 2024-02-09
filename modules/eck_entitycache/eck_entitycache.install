@@ -10,7 +10,7 @@
 function eck_entitycache_schema() {
   $schema = array();
 
-  $cache_schema = drupal_get_schema_unprocessed('system', 'cache');
+  $cache_schema = backdrop_get_schema_unprocessed('system', 'cache');
 
   foreach (EntityType::loadAll() as $entity_type) {
     $schema["cache_entity_{$entity_type->name}"] = $cache_schema;

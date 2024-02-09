@@ -21,8 +21,8 @@ class EckEntityTranslationTest extends EckTestHelper {
       'description' => 'Test translations on an ECK object, including when it is attached to another entity using EntityReference.',
       'group' => 'eck',
       'dependencies' => array(
-        'ctools',
-        'entity',
+        'plugin_manager',
+        'entity_plus',
         'entity_translation',
         'entityreference',
       ),

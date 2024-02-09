@@ -14,7 +14,7 @@ function eck__entity__menu($entity_type, $bundle) {
   // DELETE Bundles.
   $menu["{$path}/{$entity_type->name}/{$bundle->name}/delete"] = array(
     'title' => "Delete",
-    'page callback' => "drupal_get_form",
+    'page callback' => "backdrop_get_form",
     'page arguments' => array('eck__bundle__delete_form', 3, 4),
     'access callback' => 'eck__multiple_access_check',
     'access arguments' => array(
@@ -32,7 +32,7 @@ function eck__entity__menu($entity_type, $bundle) {
   // EDIT Bundles.
   $menu["{$path}/{$entity_type->name}/{$bundle->name}/edit"] = array(
     'title' => 'Edit',
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array(
       'eck__bundle__edit_form',
       $entity_type->name,
@@ -187,10 +187,10 @@ function eck__entity__list($entity_type_name, $bundle_name) {
     ->entityCondition('bundle', $bundle->name, '=')
     ->pager(20);
 
-  drupal_alter('entity_overview_query', $query, $info);
+  backdrop_alter('entity_overview_query', $query, $info);
   unset($info['entity_type']);
-  drupal_alter("entity_{$entity_type->name}_overview_query", $query, $info);
-  drupal_alter("entity_{$entity_type->name}_{$bundle->name}_overview_query", $query);
+  backdrop_alter("entity_{$entity_type->name}_overview_query", $query, $info);
+  backdrop_alter("entity_{$entity_type->name}_{$bundle->name}_overview_query", $query);
 
   $results = $query->execute();
   if (!empty($results)) {
@@ -200,7 +200,7 @@ function eck__entity__list($entity_type_name, $bundle_name) {
     $entities = array();
   }
 
-  $destination = drupal_get_destination();
+  $destination = backdrop_get_destination();
 
   // Because of the flexible paths capabilities, we are not guaranteed to see a
   // local action for the add here, so lets add a link ourselves until we figure
@@ -253,15 +253,15 @@ function eck__entity__add($entity_type_name, $bundle_name) {
   $bundle = bundle_load($entity_type_name, $bundle_name);
 
   $entity = entity_create($entity_type->name, array('type' => $bundle->name));
-  return drupal_get_form("eck__entity__form_add_{$entity_type_name}_{$bundle_name}", $entity);
+  return backdrop_get_form("eck__entity__form_add_{$entity_type_name}_{$bundle_name}", $entity);
 }
 
 /**
  * Get the entities view.
  *
- * @param string $entity_type
+ * @param EntityType $entity_type
  *   entity type
- * @param string $bundle
+ * @param Bundle $bundle
  *   Bundle.
  * @param mixed $id
  *   The entity id or the entity object itself
@@ -277,12 +277,12 @@ function eck__entity__build($entity_type, $bundle, $id, $view_mode = "full") {
     return $id->view($view_mode);
   }
   elseif (is_numeric($id)) {
-    $entity = entity_load_single($entity_type->name, $id);
+    $entity = entity_load($entity_type->name, $id);
     return $entity->view($view_mode);
   }
 
-  drupal_not_found();
-  drupal_exit();
+  backdrop_not_found();
+  backdrop_exit();
 }
 
 /**
@@ -297,13 +297,13 @@ function eck__entity__build($entity_type, $bundle, $id, $view_mode = "full") {
  */
 function eck__entity__edit($entity_type_name, $bundle_name, $id) {
   if (is_numeric($id)) {
-    $entity = entity_load_single($entity_type_name, $id);
+    $entity = entity_load($entity_type_name, $id);
   }
   elseif (is_object($id) and $id->entityType() === $entity_type_name) {
     $entity = $id;
   }
 
-  return drupal_get_form("eck__entity__form_edit_{$entity_type_name}_{$bundle_name}", $entity);
+  return backdrop_get_form("eck__entity__form_edit_{$entity_type_name}_{$bundle_name}", $entity);
 }
 
 /**
@@ -319,7 +319,7 @@ function eck__entity__edit($entity_type_name, $bundle_name, $id) {
 function eck__entity__delete($entity_type_name, $bundle_name, $entity) {
   $entity_type = entity_type_load($entity_type_name);
   $bundle = bundle_load($entity_type_name, $bundle_name);
-  return drupal_get_form('eck__entity__delete_form', $entity_type, $bundle, $entity);
+  return backdrop_get_form('eck__entity__delete_form', $entity_type, $bundle, $entity);
 }
 
 /**
@@ -349,7 +349,7 @@ function eck__entity__delete_form($form, &$form_state, $entity_type, $bundle, $e
   );
 
   $message = t("Are you sure that you want to delete %id",
-    array("%id" => entity_id($entity_type->name, $entity)));
+    array("%id" => $entity->id()));
 
   $caption = t("This action cannot be undone.");
 
@@ -388,7 +388,7 @@ function eck__entity__form($form, &$form_state, $entity) {
   $form_state[$entity->entityType()] = $entity;
 
   // Property Widget Handling through property_info by entity api.
-  $property_info = entity_get_property_info($entity->entityType());
+  $property_info = entity_plus_get_property_info($entity->entityType());
   $properties = array();
   $found_widget = FALSE;
   foreach ($property_info['properties'] as $pname => $pi) {
@@ -508,7 +508,7 @@ function eck__entity__form_submit($form, &$state) {
 
   $msg = 'Entity @entity_id - @entity_label has been saved';
   $args = array(
-    '@entity_id' => entity_id($form['#entity_type'], $entity),
+    '@entity_id' => $entity->id(),
     '@entity_label' => entity_label($form['#entity_type'], $entity),
   );
 
@@ -517,10 +517,10 @@ function eck__entity__form_submit($form, &$state) {
     'form' => $form,
     'form_state' => $state
   );
-  drupal_alter('eck_entity_save_message', $msg, $args, $context);
+  backdrop_alter('eck_entity_save_message', $msg, $args, $context);
 
   if ($msg) {
-    drupal_set_message(t($msg, $args));
+    backdrop_set_message(t($msg, $args));
   }
 
   $uri = entity_uri($entity->entityType(), $entity);
@@ -544,14 +544,14 @@ function eck__entity__view($entity_type_name, $bundle_name, $id) {
   // If the bundle does not match, we are trying to view and entity of the
   // right type but incorrect bundle.
   elseif (is_object($id) && $id->bundle() != $bundle_name) {
-    drupal_not_found();
+    backdrop_not_found();
     exit();
   }
   else {
-    $entity = entity_load_single($entity_type_name, $id);
+    $entity = entity_load($entity_type_name, $id);
   }
 
-  return entity_view($entity_type_name, array($entity));
+  return entity_view($entity);
 }
 
 /**
@@ -576,7 +576,7 @@ function eck__entity__view_callback($entities, $view_mode = 'full', $langcode = 
     foreach ($formatters as $property => $formatter) {
       $property_view[$property] = $formatter;
     }
-    $entity_id = entity_id($entity_type_name, $entity);
+    $entity_id = $entity->id();
     $entity_view = array_merge($property_view, $entity_view[$entity_type_name][$entity_id]);
 
     eck_property_behavior_invoke_plugin($entity_type, 'entity_view',

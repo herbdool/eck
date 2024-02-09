@@ -40,13 +40,13 @@ function eck_title_property_entity_view($property, $vars) {
   $title = _eck_title_property_extract_title($entity, $property);
 
   if (empty($title)) {
-    $entity_id = entity_id($entity->entityType(), $entity);
+    $entity_id = $entity->id();
     $title = "{$entity->entityType()} : {$entity_id}";
   }
 
   $uri = entity_uri($entity->entityType(), $entity);
   if ($uri['path'] == current_path()) {
-    drupal_set_title($title);
+    backdrop_set_title($title);
   }
 }
 

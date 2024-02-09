@@ -3,7 +3,7 @@
  * @file
  * ENTITY TYPE.
  *
- * Entity Types represent types of data. Drupal core contains multiple
+ * Entity Types represent types of data. Backdrop core contains multiple
  * entity types nodes, users, vocabularies, etc.
  *
  * ECK allows you to create entity types. This file contains all
@@ -39,7 +39,7 @@ function eck__entity_type__menu() {
   $menu["{$path}/add"] = array(
     'title' => 'Add entity type',
     'description' => 'Add a new entity type',
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('eck__entity_type__form'),
     'access callback' => 'eck__multiple_access_check',
     'access arguments' => array(
@@ -250,10 +250,10 @@ function eck__entity_type__form_submit($form, &$state) {
     eck__default_properties__form_submit($form, $state, $entity_type);
 
     if ($entity_type->isNew) {
-      drupal_set_message(t('The entity type %entity_type has been created.', array('%entity_type' => $entity_type->label)));
+      backdrop_set_message(t('The entity type %entity_type has been created.', array('%entity_type' => $entity_type->label)));
     }
     else {
-      drupal_set_message(t('The entity type %entity_type has been updated.', array('%entity_type' => $entity_type->label)));
+      backdrop_set_message(t('The entity type %entity_type has been updated.', array('%entity_type' => $entity_type->label)));
     }
 
     $entity_type->save();
@@ -273,7 +273,7 @@ function eck__entity_type__form_submit($form, &$state) {
  */
 function eck__entity_type__delete($entity_type) {
   $entity_type->delete();
-  drupal_set_message(t('The entity type %entity_type has been deleted.', array('%entity_type' => $entity_type->label)));
+  backdrop_set_message(t('The entity type %entity_type has been deleted.', array('%entity_type' => $entity_type->label)));
 }
 
 /**
@@ -340,7 +340,7 @@ function eck__entity_type__schema($entity_type) {
     ),
     'primary key' => array('id'),
     // Add required schema metadata fields.
-    // @see _drupal_schema_initialize().
+    // @see _backdrop_schema_initialize().
     'module' => 'eck',
     'name' => "eck_{$entity_type->name}",
   );
@@ -363,7 +363,7 @@ function eck__entity_type__info($entity_type) {
   $entity_type_label = $entity_type->label;
 
   $entity_class = "Entity";
-  $controller_class = "EntityAPIController";
+  $controller_class = "EntityPlusController";
 
   $info[$entity_type->name] = array(
     'label' => t("@etl", array("@etl" => $entity_type_label)),

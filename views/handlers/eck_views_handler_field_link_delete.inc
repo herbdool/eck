@@ -15,7 +15,7 @@ class eck_views_handler_field_link_delete extends eck_views_handler_field_link {
       $crud_info = get_bundle_crud_info($entity_type, $bundle);
       $this->options['alter']['make_link'] = TRUE;
       $this->options['alter']['path'] = str_replace('%eckentity', $entity->id, $crud_info['delete']['path']);
-      $this->options['alter']['query'] = drupal_get_destination();
+      $this->options['alter']['query'] = backdrop_get_destination();
 
       $offset_is_over_limit = FALSE;
       if (isset($this->view->query->offset) && isset($this->view->query->limit)) {
@@ -25,7 +25,7 @@ class eck_views_handler_field_link_delete extends eck_views_handler_field_link {
       }
 
       if ($offset_is_over_limit && count($this->view->result) == 1) {
-        $destination = drupal_get_destination();
+        $destination = backdrop_get_destination();
         $url_query = parse_url($destination['destination']);
         parse_str($url_query['query'], $url_data);
         $url_data['page'] = $url_data['page'] - 1;

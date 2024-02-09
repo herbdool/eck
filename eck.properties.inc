@@ -36,7 +36,7 @@ function eck_property_types() {
 
   $module_default_types = module_invoke_all('eck_property_types');
   $default_types = array_merge($default_types, $module_default_types);
-  drupal_alter('eck_property_types', $default_types);
+  backdrop_alter('eck_property_types', $default_types);
 
   // @todo As modules start to implement ECK hooks, this should be removed.
   if (module_exists('uuid') && !array_key_exists('uuid', $default_types)) {
@@ -118,7 +118,7 @@ function eck_property_type_schema($type) {
   }
 
   // @todo Don't really like this.
-  drupal_alter('eck_property_type_schema', $schema, $type);
+  backdrop_alter('eck_property_type_schema', $schema, $type);
 
   return $schema;
 }
@@ -179,7 +179,7 @@ function eck__properties__form($form, &$state, $entity_type_name) {
       }
     }
     else {
-      drupal_set_message("Can not modify the type of {$property_name}", "error");
+      backdrop_set_message("Can not modify the type of {$property_name}", "error");
     }
   }
 
@@ -270,7 +270,7 @@ function eck__properties__form($form, &$state, $entity_type_name) {
     '#after_build' => array('eck_deactivate_on_save'),
   );
 
-  $behavior_plugins = ctools_get_plugins('eck', 'property_behavior');
+  $behavior_plugins = plugin_manager_get_plugins('eck', 'property_behavior');
   $options = array();
 
   foreach ($behavior_plugins as $behavior => $info) {
@@ -321,7 +321,7 @@ function eck__properties__form_validate($form, &$state) {
   if ($state['values']['op'] == t('Add Property')) {
     if (isset($state['values']['property_behavior'])) {
       $property_behavior = $state['values']['property_behavior'];
-      $behavior_plugins = ctools_get_plugins('eck', 'property_behavior');
+      $behavior_plugins = plugin_manager_get_plugins('eck', 'property_behavior');
       if (isset($behavior_plugins[$property_behavior]['unique']) && $behavior_plugins[$property_behavior]['unique']) {
         foreach ($state['values']['new_properties'] as $property_name => $property_info) {
           if ($property_info['behavior'] == $property_behavior) {
@@ -374,6 +374,6 @@ function eck__properties__form_submit($form, &$state) {
 
     // Lets flush the cache so new behaviors and properties will get set up
     // correctly.
-    drupal_flush_all_caches();
+    backdrop_flush_all_caches();
   }
 }

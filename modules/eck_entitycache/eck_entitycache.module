@@ -23,7 +23,7 @@ function eck_entitycache_entity_info_alter(&$info) {
  */
 function eck_entitycache_eck_entity_type_insert(EntityType $entity_type) {
   // Create the new entity cache table for this entity.
-  $schema = drupal_get_schema_unprocessed('system', 'cache');
+  $schema = backdrop_get_schema_unprocessed('system', 'cache');
   $schema['description'] = "Cache table used to store {$entity_type->name} entity records.";
   db_create_table("cache_entity_{$entity_type->name}", $schema);
 }

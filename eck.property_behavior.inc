@@ -23,8 +23,8 @@ function eck_property_behavior_implements($entity_type, $property, $function_nam
 
   if (array_key_exists('behavior', $info) && !empty($info['behavior'])) {
     $behavior = $info['behavior'];
-    $plugin = ctools_get_plugins('eck', 'property_behavior', $behavior);
-    $function = ctools_plugin_get_function($plugin, $function_name);
+    $plugin = plugin_manager_get_plugins('eck', 'property_behavior', $behavior);
+    $function = plugin_manager_get_function($plugin, $function_name);
 
     if ($function) {
       $return = $function;
@@ -47,9 +47,9 @@ function eck_property_behavior_invoke_plugin($entity_type, $function_name, $all 
     if (array_key_exists('behavior', $info) && !empty($info['behavior'])) {
       $behavior = $info['behavior'];
 
-      $plugin = ctools_get_plugins('eck', 'property_behavior', $behavior);
+      $plugin = plugin_manager_get_plugins('eck', 'property_behavior', $behavior);
 
-      $function = ctools_plugin_get_function($plugin, $function_name);
+      $function = plugin_manager_get_function($plugin, $function_name);
 
       if ($function) {
         if (array_key_exists($property, $specific)) {
@@ -92,9 +92,9 @@ function eck_property_behavior_invoke_plugin_alter($entity_type, $function_name,
     if (array_key_exists('behavior', $info) && !empty($info['behavior'])) {
       $behavior = $info['behavior'];
 
-      $plugin = ctools_get_plugins('eck', 'property_behavior', $behavior);
+      $plugin = plugin_manager_get_plugins('eck', 'property_behavior', $behavior);
 
-      $function = ctools_plugin_get_function($plugin, $function_name);
+      $function = plugin_manager_get_function($plugin, $function_name);
 
       if ($function) {
         $return = $function($property, $return);

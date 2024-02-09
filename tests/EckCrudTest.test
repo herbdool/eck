@@ -18,7 +18,7 @@ class EckCrudTest extends EckTestHelper {
       'name' => 'ECK CRUD test',
       'description' => 'Test the basic CRUD operations.',
       'group' => 'eck',
-      'dependencies' => array('ctools', 'entity'),
+      'dependencies' => array('plugin_manager', 'entity'),
     );
   }
 

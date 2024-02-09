@@ -1,10 +1,10 @@
-Entity Construction Kit (ECK)
+# Entity Construction Kit (ECK)
 
 The Entity Construction Kit creates entities for you!
 
 - So, How do you use it?
 
--- Entity Type Administration
+## Entity Type Administration
 
 The main administration page is located at /admin/structure/eck Here you will be
 able to see all of the entities you have created, under the "Overview" tab.
@@ -17,7 +17,7 @@ different just add the bundle name when creating the entity type. After adding
 an entity type, you can go back to the overview tab and see a link to you Bundle
 administration section.
 
--- Bundle Administration
+## Bundle Administration
 
 If you click on an Entity Type's name, you will be taken the the Bundle
 administration page. Here you will see the bundle that was created automatically
@@ -31,3 +31,30 @@ it will be shown in the overview tab, and you can further view or edit your
 entity from there.
 
 That is all.
+
+## Installation
+
+Install this module using the official Backdrop CMS instructions at
+<https://backdropcms.org/guide/modules>.
+
+## License
+
+This project is GPL v2 software. See the LICENSE.txt file in this directory for
+complete text.
+
+## Maintainers
+
+- ?
+
+## Credits
+
+Ported to Backdrop by [Herb v/d Dool](https://github.com/herbdool) and others.
+
+Backdrop version maintained by:
+
+- <https://www.drupal.org/u/dieterholvoet>
+- <https://www.drupal.org/u/robloach>
+- <https://www.drupal.org/u/amykhailova>
+- <https://www.drupal.org/u/fmizzell>
+- <https://www.drupal.org/u/legolasbo>
+- <https://www.drupal.org/u/arrow>
