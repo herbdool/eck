@@ -138,8 +138,10 @@ function eck_plugin_manager_plugin_type() {
  * By default the label is the id of the entity, but a number of
  * hooks are defined to customize the label if needed
  *
- * @param object $entity
+ * @param EntityInterface $entity
  *   an object as returned by entity_load().
+ *
+ * @return string
  */
 function eck__entity__label($entity) {
   $hook_names = array(
@@ -169,6 +171,8 @@ function eck__entity__label($entity) {
  *
  * @param object $entity
  *   an object as returned by entity_load().
+ *
+ * @return array
  */
 function eck__entity__uri($entity) {
 
@@ -178,7 +182,7 @@ function eck__entity__uri($entity) {
   $crud_info = get_bundle_crud_info($entity->entityType(), $entity->bundle());
   $view_path = str_replace('%eckentity', $ids[0], $crud_info['view']['path']);
 
-  return array('path' => $view_path);
+  return array('path' => $view_path, 'options' => array());
 }
 
 /**
@@ -406,8 +410,8 @@ function eck_entity_property_info() {
       if (isset($properties[$key])) {
         $property['label'] = $properties[$key]['label'];
       }
-      $property['setter callback'] = "entity_property_verbatim_set";
-      $property['getter callback'] = 'entity_property_verbatim_get';
+      $property['setter callback'] = "entity_plus_property_verbatim_set";
+      $property['getter callback'] = 'entity_plus_property_verbatim_get';
       $property['description'] = $property['label'];
 
       // A couple of alter hooks so a module can alter the property info
@@ -453,26 +457,6 @@ function eck_entity_property_info_alter(&$info) {
       $info[$entity_type->name] = $entity_property_info;
     }
   }
-}
-
-/**
- * Implements hook_features_api().
- */
-function eck_features_api() {
-  return array(
-    'eck_entity_type' => array(
-      'name' => t('Entity Types'),
-      'feature_source' => TRUE,
-      'file' => backdrop_get_path('module', 'eck') . '/eck.features.inc',
-      'default_hook' => 'eck_entity_type_info',
-    ),
-    'eck_bundle' => array(
-      'name' => t('Bundles'),
-      'feature_source' => TRUE,
-      'file' => backdrop_get_path('module', 'eck') . '/eck.features.inc',
-      'default_hook' => 'eck_bundle_info',
-    ),
-  );
 }
 
 /**
@@ -929,7 +913,7 @@ function eck_init() {
  * @see eck_init()
  */
 function eck_clean_up_request() {
-  variable_set("eck_clear_caches", TRUE);
+  state_set("eck_clear_caches", TRUE);
 }
 
 /**
@@ -938,8 +922,8 @@ function eck_clean_up_request() {
  * @see eck_clean_up()
  */
 function eck_clean_up_init() {
-  if (variable_get("eck_clear_caches", FALSE)) {
-    variable_set("eck_clear_caches", FALSE);
+  if (state_get("eck_clear_caches", FALSE)) {
+    state_set("eck_clear_caches", FALSE);
     eck_clean_up();
   }
 }

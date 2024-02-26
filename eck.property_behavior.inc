@@ -70,7 +70,7 @@ function eck_property_behavior_invoke_plugin($entity_type, $function_name, $all 
 }
 
 /**
- * A general function for beahaviors that are meant to alter data.
+ * A general function for behaviors that are meant to alter data.
  *
  * @param EntityType $entity_type
  *   The entity type object.

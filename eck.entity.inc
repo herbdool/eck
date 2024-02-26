@@ -382,7 +382,7 @@ function eck__entity__form($form, &$form_state, $entity) {
   );
   $form['#entity_type'] = array(
     '#type' => 'value',
-    '#value' => $entity->type,
+    '#value' => $entity->entityType(),
   );
 
   $form_state[$entity->entityType()] = $entity;

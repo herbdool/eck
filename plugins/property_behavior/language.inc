@@ -70,7 +70,7 @@ function eck_language_property_widget($property, $vars) {
         '#type' => 'select',
         '#title' => $vars['properties'][$property]['label'],
         '#default_value' => $language,
-        '#options' => array(LANGUAGE_NONE => t('Language neutral')) + locale_language_list('name'),
+        '#options' => array(LANGUAGE_NONE => t('Language neutral')) + language_list(TRUE, TRUE),
       );
     }
     else {
