@@ -169,7 +169,7 @@ function eck__entity__label($entity) {
 /**
  * Entity URI callback.
  *
- * @param object $entity
+ * @param EntityInterface $entity
  *   an object as returned by entity_load().
  *
  * @return array
@@ -216,6 +216,19 @@ function eck_schema_alter(&$schema) {
       }
     }
   }
+}
+
+/**
+ * Implements hook_eck_entity_label()
+ */
+function eck_eck_entity_label($entity, $entity_id) {
+  $entity_type = entity_type_load($entity->entityType());
+  $value = eck_property_behavior_invoke_plugin($entity_type, 'entity_label',
+    array('entity' => $entity));
+
+  // It's possible to have more than one plugin returning a label for an entity
+  // so just pick the first one.
+  return !empty($value) ? reset($value) : NULL;
 }
 
 /**
@@ -812,7 +825,7 @@ function eck__entity_menu_access($action, $entity_type_name, $bundle_name, $enti
  *   (representing the bundle to check access for; see parallel example in
  *   node_access()) we are checking access for all entities of the given type
  *   and bundle.
- * @param object $account
+ * @param User $account
  *   The user to check access for. If this is NULL, access will be checked for
  *   the current user.
  * @param string $entity_type_name
@@ -858,9 +871,9 @@ function eck__entity_access($op, $entity_or_bundle, $account, $entity_type_name)
 }
 
 /**
- * Implements hook_entity_view_alter().
+ * Implements hook_entity_plus_view_alter().
  */
-function eck_entity_view_alter(&$build, $entity_type) {
+function eck_entity_plus_view_alter(&$build, $entity_type) {
   // Return early if we don't have to add contextual links.
   if (!module_exists('contextual') || !user_access('access contextual links')) {
     return;

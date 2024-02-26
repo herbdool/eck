@@ -12,6 +12,7 @@
 
 $plugin = array(
   'label' => "Title and Formatter",
+  'entity_label' => 'eck_title_and_formatter_property_entity_label',
   'entity_view' => 'eck_title_and_formatter_property_entity_view',
   'entity_info' => 'eck_title_and_formatter_property_entity_info',
   'default_widget' => 'eck_title_and_formatter_property_widget',
@@ -69,6 +70,21 @@ function eck_title_and_formatter_property_entity_info($property, $var) {
   $info['entity keys']['label'] = $property;
 
   return $info;
+}
+
+/**
+ * Set the entity label.
+ */
+function eck_title_and_formatter_property_entity_label($property, $vars) {
+  $entity = $vars['entity'];
+  $title = _eck_title_and_formatter_property_extract_title($entity, $property);
+
+  if (empty($title)) {
+    $entity_id = $entity->id();
+    $title = "{$entity->entityType()} : {$entity_id}";
+  }
+
+  return $title;
 }
 
 /**

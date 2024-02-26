@@ -551,7 +551,7 @@ function eck__entity__view($entity_type_name, $bundle_name, $id) {
     $entity = entity_load($entity_type_name, $id);
   }
 
-  return entity_view($entity);
+  return entity_plus_view($entity->type, array($entity));
 }
 
 /**
@@ -577,7 +577,7 @@ function eck__entity__view_callback($entities, $view_mode = 'full', $langcode = 
       $property_view[$property] = $formatter;
     }
     $entity_id = $entity->id();
-    $entity_view = array_merge($property_view, $entity_view[$entity_type_name][$entity_id]);
+    $entity_view = array_merge($property_view, $entity_view);
 
     eck_property_behavior_invoke_plugin($entity_type, 'entity_view',
       array('entity' => $entity));
